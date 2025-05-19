@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+    {% block conteudo %}
+    <h1>Comparando {{ nome1 }} x {{ nome2 }}</h1>
+    <table border="1">
+        <tr>
+            <th>Característica</th>
+            <th>{{ nome1 }}</th>
+            <th>{{ nome2 }}</th>
+        </tr>
+        {% for row in comparacao %}
+        <tr>
+            <td>{{ row['Caracteristica'] }}</td>
+            <td>{{ row[nome1] }}</td>
+            <td>{{ row[nome2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/">Voltar</a>
+    
+    {% endblock %}

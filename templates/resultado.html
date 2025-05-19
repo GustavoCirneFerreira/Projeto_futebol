@@ -1,0 +1,17 @@
+ <h1>Jogadores Filtrados</h1>
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Posição</th>
+            <th>Valor Estimado</th>
+        </tr>
+        {% for row in tabela %}
+        <tr>
+            <td>{{ row['Nome'] }}</td>
+            <td>{{ row['Posição'] }}</td>
+            <td>{{ row['Valor Estimado'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/">Voltar</a>

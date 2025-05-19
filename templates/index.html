@@ -1,0 +1,53 @@
+    {% extends 'base.html' %}
+
+    {% block conteudo %}
+    <h1>Filtrar Jogadores</h1>
+    <form method="POST" action="/filtrar">
+        <label>Posição:</label>
+        <select name="posicao">
+            <option value="Todas">Todas</option>
+            {% for p in ['goleiros', 'laterais', 'zagueiros', 'volantes', 'boxtobox', 'armadores', 'atacantes'] %}
+                <option value="{{ p }}">{{ p.capitalize() }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Valor Máximo:</label>
+        <input type="text" name="valor">
+
+        <label>Característica 1:</label>
+        <select name="carac1">
+            {% for c in caracteristicas %}
+                <option value="{{ c }}">{{ c }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Característica 2:</label>
+        <select name="carac2">
+            {% for c in caracteristicas %}
+                <option value="{{ c }}">{{ c }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <h2>Comparar Jogadores</h2>
+    <form method="POST" action="/comparar">
+        <label>Jogador 1:</label>
+        <select name="jogador1">
+            {% for nome in nomes_jogadores %}
+                <option value="{{ nome }}">{{ nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Jogador 2:</label>
+        <select name="jogador2">
+            {% for nome in nomes_jogadores %}
+                <option value="{{ nome }}">{{ nome }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Comparar</button>
+    </form>
+  
+    {% endblock %}

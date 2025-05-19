@@ -1,0 +1,64 @@
+import app
+from flask import Flask, render_template, request
+import pandas as pd
+from jogador_analyzer import JogadorAnalyzer
+
+app = Flask(__name__)
+
+# Arquivos de entrada
+arquivos = [
+    "atacantes.csv",
+    "goleiros.csv",
+    "laterais.csv",
+    "zagueiros.csv",
+    "volantes.csv",
+    "boxtobox.csv",
+    "armadores.csv"
+]
+
+analise = JogadorAnalyzer(arquivos)
+caracteristicas = analise.get_caracteristicas()
+nomes_jogadores = analise.get_nomes_jogadores()
+
+@app.route("/")
+def index():
+    return render_template("index.html", 
+                           caracteristicas=caracteristicas,
+                           nomes_jogadores=nomes_jogadores)
+
+@app.route("/filtrar", methods=["POST"])
+def filtrar():
+    posicao = request.form.get("posicao")
+    valor = request.form.get("valor")
+    carac1 = request.form.get("carac1")
+    carac2 = request.form.get("carac2")
+
+    try:
+        valor = float(valor) if valor else None
+    except ValueError:
+        valor = None
+
+    caracs = [c for c in [carac1, carac2] if c]
+    resultado = analise.filtrar_jogadores(posicao, valor, caracs)
+
+    return render_template("resultado.html", tabela=resultado.to_dict(orient="records"))
+
+@app.route("/comparar", methods=["POST"])
+def comparar():
+    nome1 = request.form.get("jogador1")
+    nome2 = request.form.get("jogador2")
+
+    j1, j2 = analise.comparar_jogadores(nome1, nome2)
+    if j1 is None or j2 is None:
+        return "Jogador não encontrado.", 400
+
+    comparacao = pd.DataFrame({
+        "Caracteristica": caracteristicas,
+        nome1: j1[caracteristicas].values,
+        nome2: j2[caracteristicas].values
+    })
+
+    return render_template("comparacao.html", comparacao=comparacao.to_dict(orient="records"), nome1=nome1, nome2=nome2)
+
+if __name__ == "__main__":
+    app.run(debug=True)
