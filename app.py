@@ -32,6 +32,8 @@ def filtrar():
     valor = request.form.get("valor")
     carac1 = request.form.get("carac1")
     carac2 = request.form.get("carac2")
+    # idade= request.form.get("idade")
+    # nome= request.form.get("nome")
 
     try:
         valor = float(valor) if valor else None
@@ -39,7 +41,7 @@ def filtrar():
         valor = None
 
     caracs = [c for c in [carac1, carac2] if c]
-    resultado = analise.filtrar_jogadores(posicao, valor, caracs)
+    resultado = analise.filtrar_jogadores(posicao, valor, caracs)#idade, nome
 
     return render_template("resultado.html", tabela=resultado.to_dict(orient="records"))
 
