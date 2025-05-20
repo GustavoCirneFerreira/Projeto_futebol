@@ -4,7 +4,7 @@
     <h1>Filtrar Jogadores</h1>
     <div id="caixa_filtro">
         <form method="POST" action="/filtrar">
-            <div id="posicoes">
+            <div class="form-grid">
                 <label>Posição:</label>
                 <select name="posicao">
                     <option value="Todas">Todas</option>
@@ -16,34 +16,38 @@
                 <label>Nome do Jogador:</label>
                 <input type="text" placeholder="Ex: Ganso" name="nome">
             </div>
-            <div id="valor">           
-                <label>Valor Máximo:</label>
-                <input type="number" placeholder="Ex: 1000000" name="valor">
-                
-                <label>Idade:</label>
-                <input type="number" placeholder="Ex: 25" name="idade">
-            </div>
-            <div id="carac"> 
-                <label>Característica 1:</label>
-                <select name="carac1">
-                    {% for c in caracteristicas %}
-                    <option value="{{ c }}">{{ c }}</option>
-                    {% endfor %}
-                </select>
-                
-                <label>Característica 2:</label>
-                <select name="carac2">
-                    {% for c in caracteristicas %}
-                    <option value="{{ c }}">{{ c }}</option>
-                    {% endfor %}
-                </select>
+                <div class="form-grid">
+                    <label>Valor Máximo:</label>
+                        <input type="number" name="valor" placeholder="Ex: 1000000">
+                </div>
+                <div class="form-grid">
+                    <label>Idade:</label>
+                        <input type="number" name="idade" placeholder="Ex: 25">
+                </div>
+
+                <div class="form-grid">
+                    <label>Característica 1:</label>
+                        <select name="carac1">
+                            {% for c in caracteristicas %}
+                            <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                        </select>
+                </div>
+                <div class="form-grid">
+                        <label>Característica 2:</label>
+                        <select name="carac2">
+                            {% for c in caracteristicas %}
+                            <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                        </select>
+               </div>
+               <button id="filtrar" type="submit">Filtrar</button>
             </div>   
-                <button id="filtrar" type="submit">Filtrar</button>
-            </form>
+        </form>
     </div>
 
     <h1>Jogadores Filtrados</h1>
-    <table border="1">
+    <table id="customers" border="1">
         <tr>
             <th>Nome</th>
             <th>Posição</th>
@@ -61,7 +65,7 @@
     <footer>
         <h2>Comparar Jogadores</h2>
         <form method="POST" action="/comparar">
-            <label>Jogador 1:</label>
+            <label id="baixo">Jogador 1:</label>
             <select name="jogador1">
                 {% for nome in nomes_jogadores %}
                     <option value="{{ nome }}">{{ nome }}</option>

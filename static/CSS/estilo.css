@@ -6,13 +6,31 @@
     background-color: teal;
 }
 
-input, select, button {
-    grid-row: inherit;
-    display: block;
-    margin-bottom: 1rem;
+/* input, select, button {
+    margin-bottom: 4rem;
     padding: 0.5rem;
     font-size: 1rem;
     width: 300px;
+    align-items: center;
+    position: relative;
+} */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2rem; 
+    margin-bottom: 2rem;
+}
+
+.form-grid div {
+    display: flex;
+    flex-direction: column;
+}
+
+input, select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 50%;
 }
 
 button {
@@ -37,6 +55,29 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
 }
 
 footer {
