@@ -14,14 +14,14 @@
                 </select>
                 
                 <label>Nome do Jogador:</label>
-                <input type="text" name="nome">
+                <input type="text" placeholder="Ex: Ganso" name="nome">
             </div>
             <div id="valor">           
                 <label>Valor Máximo:</label>
-                <input type="number" name="valor">
+                <input type="number" placeholder="Ex: 1000000" name="valor">
                 
                 <label>Idade:</label>
-                <input type="number" name="idade">
+                <input type="number" placeholder="Ex: 25" name="idade">
             </div>
             <div id="carac"> 
                 <label>Característica 1:</label>
@@ -41,6 +41,22 @@
                 <button id="filtrar" type="submit">Filtrar</button>
             </form>
     </div>
+
+    <h1>Jogadores Filtrados</h1>
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Posição</th>
+            <th>Valor Estimado</th>
+        </tr>
+        {% for row in tabela %}
+        <tr>
+            <td>{{ row['Nome'] }}</td>
+            <td>{{ row['Posição'] }}</td>
+            <td>{{ row['Valor Estimado'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
         
     <footer>
         <h2>Comparar Jogadores</h2>

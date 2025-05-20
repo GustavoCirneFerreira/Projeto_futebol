@@ -1,4 +1,4 @@
-import app
+# import app
 from flask import Flask, render_template, request
 import pandas as pd
 from jogador_analyzer import JogadorAnalyzer
@@ -22,7 +22,7 @@ nomes_jogadores = analise.get_nomes_jogadores()
 
 @app.route("/")
 def index():
-    return render_template("index.html", 
+    return render_template("index.html",
                            caracteristicas=caracteristicas,
                            nomes_jogadores=nomes_jogadores)
 
@@ -32,18 +32,27 @@ def filtrar():
     valor = request.form.get("valor")
     carac1 = request.form.get("carac1")
     carac2 = request.form.get("carac2")
-    # idade= request.form.get("idade")
-    # nome= request.form.get("nome")
+    idade= request.form.get("idade")
+    nome= request.form.get("nome")
 
     try:
         valor = float(valor) if valor else None
     except ValueError:
         valor = None
+        
+    try:
+        idade = int(idade) if idade else None
+    except ValueError:
+        idade = None
+
 
     caracs = [c for c in [carac1, carac2] if c]
-    resultado = analise.filtrar_jogadores(posicao, valor, caracs)#idade, nome
+    resultado = analise.filtrar_jogadores(posicao, valor, caracs, idade=idade, nome=nome)
 
-    return render_template("resultado.html", tabela=resultado.to_dict(orient="records"))
+    return render_template("index.html", 
+                           tabela=resultado.to_dict(orient="records"),
+                           caracteristicas=caracteristicas,
+                           nomes_jogadores=nomes_jogadores)
 
 @app.route("/comparar", methods=["POST"])
 def comparar():

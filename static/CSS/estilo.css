@@ -3,33 +3,40 @@
 }
 
 #caixa_filtro {
-    padding: 3rem 3.5rem;
     background-color: teal;
 }
 
-#posicoes {
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    transform: translate(-35%, 100%);
+input, select, button {
+    grid-row: inherit;
+    display: block;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 300px;
 }
 
-#valor {
-    display: grid;
-    text-align: center;
-    justify-content:center;
-    transform:translate(35%);
+button {
+    width: 150px;
+    background-color: teal;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
-#carac {
-    display: grid;
-    justify-content: center;
-    text-align: center;
-    transform:translate(0%, -100%)
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-#filtrar {
-    transform:translate(1730%)
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 
 footer {

@@ -63,7 +63,7 @@ class JogadorAnalyzer:
     def get_nomes_jogadores(self):
         return self.df_total["Nome"].dropna().tolist()
 
-    def filtrar_jogadores(self, posicao="Todas", valor_max=None, caracteristicas=[]):
+    def filtrar_jogadores(self, posicao="Todas", valor_max=None, caracteristicas=[],  idade=None, nome=None):
         df_filtrado = self.df_total.copy()
 
         if posicao != "Todas":
@@ -71,6 +71,12 @@ class JogadorAnalyzer:
 
         if valor_max is not None:
             df_filtrado = df_filtrado[df_filtrado["Valor Estimado"] <= valor_max]
+            
+        if idade is not None:
+            df_filtrado = df_filtrado[df_filtrado["Idade"] == idade]
+
+        if nome:
+            df_filtrado = df_filtrado[df_filtrado["Nome"].str.contains(nome, case=False, na=False)]
 
         if caracteristicas:
             df_filtrado["Score"] = df_filtrado[caracteristicas].mean(axis=1)
