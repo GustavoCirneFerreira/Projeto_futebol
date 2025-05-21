@@ -45,9 +45,10 @@
                </div>
                 <div class="form-grid">
                         <label class="infos">Nacionalidade:</label>
-                        <select name="carac2">
-                            {% for c in caracteristicas %}
-                            <option value="{{ c }}">{{ c }}</option>
+                        <select name="nacionalidade">
+                            <option value="">Todas</option>
+                            {% for n in nacionalidades %}
+                                <option value="{{ n }}">{{ n }}</option>
                             {% endfor %}
                         </select>
                </div>
@@ -60,12 +61,22 @@
         <tr>
             <th>Nome</th>
             <th>Posição</th>
+            <th>Idade</th>
+            <th>Nacionalidade</th>
+            <th>Nota Média</th>
+            <th>Gols</th>
+            <th>Assistências</th>
             <th>Valor Estimado</th>
         </tr>
         {% for row in tabela %}
         <tr>
             <td>{{ row['Nome'] }}</td>
             <td>{{ row['Posição'] }}</td>
+            <td>{{ row['Idade'] }}</td>
+            <td>{{ row['Nac'] }}</td>
+            <td>{{ row['Nota Media'] }}</td>
+            <td>{{ row['Gols'] }}</td>
+            <td>{{ row['Assistencias'] }}</td>
             <td>{{ row['Valor Estimado'] }}</td>
         </tr>
         {% endfor %}

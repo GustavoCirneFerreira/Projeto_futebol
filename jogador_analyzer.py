@@ -1,88 +1,118 @@
-import pandas as pd 
+import pandas as pd
 import re
 
 class JogadorAnalyzer:
     def __init__(self, arquivos):
         self.dfs = []
+        self.dataframes = {}
+
         for arq in arquivos:
-            posicao = arq.split("/")[-1].replace(".csv", "")
-            df = pd.read_csv(arq, encoding="latin1")
+            try:
+                posicao = arq.split("/")[-1].replace(".csv", "")
+                df = pd.read_csv(arq, encoding="latin1", sep=";")
 
-            # Adicionar coluna "Posição"
-            df["Posição"] = posicao
+                # Adiciona coluna com a posição
+                df["Posição"] = posicao
 
-            # Tratar coluna "Valor Estimado"
-            df["Valor Estimado"] = df["Valor Estimado"].apply(self._converter_valor)
+                # Converte valor estimado
+                df["Valor Estimado"] = df["Valor Estimado"].apply(self._converter_valor)
 
-            # Tratar altura (ex: "177 cm") → 177
-            if "Altura" in df.columns:
-                df["Altura"] = df["Altura"].astype(str).str.extract(r"(\d+)").astype(float)
+                # Trata altura ("177 cm" → 177)
+                if "Altura" in df.columns:
+                    df["Altura"] = df["Altura"].astype(str).str.extract(r"(\d+)").astype(float)
 
-            # Tratar distância percorrida (ex: "458,7 km") → 458.7
-            if "Distancia percorrida" in df.columns:
-                df["Distancia percorrida"] = (
-                    df["Distancia percorrida"]
-                    .astype(str)
-                    .str.replace(",", ".", regex=False)
-                    .str.extract(r"([\d.]+)")
-                    .astype(float)
-                )
+                # Trata distância percorrida ("458,7 km" → 458.7)
+                if "Distancia percorrida" in df.columns:
+                    df["Distancia percorrida"] = (
+                        df["Distancia percorrida"]
+                        .astype(str)
+                        .str.replace(",", ".", regex=False)
+                        .str.extract(r"([\d.]+)")
+                        .astype(float)
+                    )
 
-            self.dfs.append(df)
+                self.dfs.append(df)
+                self.dataframes[posicao] = df  # ESSENCIAL para filtro por posição
 
-        self.df_total = pd.concat(self.dfs, ignore_index=True)
-        self.df_total.fillna(0, inplace=True)
+            except Exception as e:
+                print(f"[ERRO] Falha ao carregar '{arq}': {e}")
+
+        # Junta todos os dataframes, se houver
+        if self.dfs:
+            self.df_total = pd.concat(self.dfs, ignore_index=True)
+            self.df_total.fillna(0, inplace=True)
+        else:
+            self.df_total = pd.DataFrame()
 
     def _converter_valor(self, valor_str):
-        """
-        Converte valores do tipo "R$38M - R$115M" ou "Não está à venda" para float
-        """
+        """Converte valores como 'R$38M' ou 'Não está à venda' em float"""
         if not isinstance(valor_str, str):
             return 0
 
         if "Não está à venda" in valor_str:
             return 0
 
-        # Pegar só o primeiro número
         match = re.search(r"R\$([\d,.]+)([MK]?)", valor_str.replace(".", ""))
         if match:
             valor = float(match.group(1).replace(",", "."))
-            multiplicador = match.group(2)
-            if multiplicador == "M":
+            mult = match.group(2)
+            if mult == "M":
                 valor *= 1_000_000
-            elif multiplicador == "K":
+            elif mult == "K":
                 valor *= 1_000
             return valor
 
         return 0
 
     def get_caracteristicas(self):
-        colunas_excluidas = ["Nome", "Posição", "Valor Estimado", "Clube", "Nac", "Pé Preferido", "Idade", "Expira", "Salário"]
+        colunas_excluidas = [
+            "Nome", "Posição", "Valor Estimado", "Clube",
+            "Nac", "Pé Preferido", "Idade", "Expira", "Salário"
+        ]
         return [col for col in self.df_total.columns if col not in colunas_excluidas and pd.api.types.is_numeric_dtype(self.df_total[col])]
 
     def get_nomes_jogadores(self):
         return self.df_total["Nome"].dropna().tolist()
 
-    def filtrar_jogadores(self, posicao="Todas", valor_max=None, caracteristicas=[],  idade=None, nome=None):
-        df_filtrado = self.df_total.copy()
+    def get_nacionalidades(self):
+        if "Nac" in self.df_total.columns:
+            return sorted(self.df_total["Nac"].dropna().astype(str).unique().tolist())
+        return []
 
-        if posicao != "Todas":
-            df_filtrado = df_filtrado[df_filtrado["Posição"] == posicao]
+    def filtrar_jogadores(self, posicao, valor=None, caracteristicas=None, idade=None, nome=None, nacionalidade=None):
+        # Se tiver posição específica
+        if posicao and posicao != "Todas":
+            if posicao in self.dataframes:
+                df = self.dataframes[posicao].copy()
+            else:
+                return pd.DataFrame()
+        else:
+            df = self.df_total.copy()
 
-        if valor_max is not None:
-            df_filtrado = df_filtrado[df_filtrado["Valor Estimado"] <= valor_max]
-            
-        if idade is not None:
-            df_filtrado = df_filtrado[df_filtrado["Idade"] == idade]
-
+        # Filtro por nome
         if nome:
-            df_filtrado = df_filtrado[df_filtrado["Nome"].str.contains(nome, case=False, na=False)]
+            df = df[df["Nome"].str.contains(nome, case=False, na=False)]
 
+        # Filtro por idade
+        if idade:
+            df = df[df["Idade"] == idade]
+
+        # Filtro por valor
+        if valor:
+            df = df[df["Valor Estimado"] <= valor]
+
+        # Filtro por nacionalidade
+        if nacionalidade and nacionalidade != "Todas":
+            if "Nac" in df.columns:
+                df = df[df["Nac"] == nacionalidade]
+
+        # Ordenação pelas características escolhidas
         if caracteristicas:
-            df_filtrado["Score"] = df_filtrado[caracteristicas].mean(axis=1)
-            df_filtrado = df_filtrado.sort_values(by="Score", ascending=False)
+            for carac in caracteristicas:
+                if carac in df.columns:
+                    df = df.sort_values(by=carac, ascending=False)
 
-        return df_filtrado[["Nome", "Posição", "Valor Estimado"]]
+        return df
 
     def comparar_jogadores(self, nome1, nome2):
         df = self.df_total

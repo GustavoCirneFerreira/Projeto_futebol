@@ -17,6 +17,7 @@ arquivos = [
 ]
 
 analise = JogadorAnalyzer(arquivos)
+nacionalidades = analise.get_nacionalidades()
 caracteristicas = analise.get_caracteristicas()
 nomes_jogadores = analise.get_nomes_jogadores()
 
@@ -24,7 +25,8 @@ nomes_jogadores = analise.get_nomes_jogadores()
 def index():
     return render_template("index.html",
                            caracteristicas=caracteristicas,
-                           nomes_jogadores=nomes_jogadores)
+                           nomes_jogadores=nomes_jogadores,
+                            nacionalidades=nacionalidades)
 
 @app.route("/filtrar", methods=["POST"])
 def filtrar():
@@ -34,6 +36,7 @@ def filtrar():
     carac2 = request.form.get("carac2")
     idade= request.form.get("idade")
     nome= request.form.get("nome")
+    nacionalidade = request.form.get("nacionalidade")
 
     try:
         valor = float(valor) if valor else None
@@ -45,14 +48,14 @@ def filtrar():
     except ValueError:
         idade = None
 
-
     caracs = [c for c in [carac1, carac2] if c]
-    resultado = analise.filtrar_jogadores(posicao, valor, caracs, idade=idade, nome=nome)
+    resultado = analise.filtrar_jogadores(posicao, valor, caracs, idade=idade, nome=nome, nacionalidade=nacionalidade)
 
     return render_template("index.html", 
                            tabela=resultado.to_dict(orient="records"),
                            caracteristicas=caracteristicas,
-                           nomes_jogadores=nomes_jogadores)
+                           nomes_jogadores=nomes_jogadores,
+                           nacionalidades=nacionalidades)
 
 @app.route("/comparar", methods=["POST"])
 def comparar():
