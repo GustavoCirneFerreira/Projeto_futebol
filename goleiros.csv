@@ -1,25 +1,25 @@
-;Nome;Idade;Nacionalidade;Valor Estimado;Salário;Nota media;Defesas Seguras;Mins;Penaltis defendidos;Partidas sem sofre gols;Pressão tentadas
-0;Sergio Rochet;31.0;URU;Não está à venda;R$360.000 p/m;7.1;37;4.275;1;21;0
-1;Agustín Marchesín;36.0;ARG;Não está à venda;R$320.000 p/m;6.96;56;4.681;1;21;0
-2;Gatito Fernández;36.0;PAR;R$70m - R$220m;R$390.000 p/m;6.88;42;4.237;1;18;0
+;Nome;Idade;Nac;Valor Estimado;Salï¿½rio;Nota media;Defesas Seguras;Mins;Penaltis defendidos;Partidas sem sofre gols;Pressï¿½o tentadas
+0;Sergio Rochet;31.0;URU;Nï¿½o estï¿½ ï¿½ venda;R$360.000 p/m;7.1;37;4.275;1;21;0
+1;Agustï¿½n Marchesï¿½n;36.0;ARG;Nï¿½o estï¿½ ï¿½ venda;R$320.000 p/m;6.96;56;4.681;1;21;0
+2;Gatito Fernï¿½ndez;36.0;PAR;R$70m - R$220m;R$390.000 p/m;6.88;42;4.237;1;18;0
 3;Samuel Portugal;30.0;BRA;R$4M;R$200.000 p/m;6.76;11;990;0;3;0
 4;John;28.0;BRA;R$7,5M - R$22M;R$177.500 p/m;7.03;18;2.07;2;13;0
-5;Cássio;37.0;BRA;R$70m - R$220m;R$500.000 p/m;6.87;56;5.04;2;20;0
-6;Léo Jardim;29.0;BRA;R$11M - R$32M;R$430.000 p/m;6.94;37;4.494;0;19;0
-7;Weverton;36.0;BRA;Não está à venda;R$650.000 p/m;6.88;56;5;1;18;0
+5;Cï¿½ssio;37.0;BRA;R$70m - R$220m;R$500.000 p/m;6.87;56;5.04;2;20;0
+6;Lï¿½o Jardim;29.0;BRA;R$11M - R$32M;R$430.000 p/m;6.94;37;4.494;0;19;0
+7;Weverton;36.0;BRA;Nï¿½o estï¿½ ï¿½ venda;R$650.000 p/m;6.88;56;5;1;18;0
 8;Daniel Fuzato;27.0;BRA;R$4,5M - R$13M;R$400.000 p/m;6.72;5;360;0;1;0
-10;Santos;34.0;BRA;Não está à venda;R$2.170.000 p/m;6.8;50;4.61;0;17;0
+10;Santos;34.0;BRA;Nï¿½o estï¿½ ï¿½ venda;R$2.170.000 p/m;6.8;50;4.61;0;17;0
 11;Rafael Cabral;34.0;BRA;R$1,4M - R$4,25M;R$165.000 p/m;6.76;37;4.05;0;11;0
-12;Agustín Rossi;29.0;ARG;R$17M - R$52M;R$530.000 p/m;6.85;40;5.121;0;23;0
-14;Fábio;44.0;BRA;R$280m - R$850m;R$200.000 p/m;6.81;37;3.1;0;9;0
+12;Agustï¿½n Rossi;29.0;ARG;R$17M - R$52M;R$530.000 p/m;6.85;40;5.121;0;23;0
+14;Fï¿½bio;44.0;BRA;R$280m - R$850m;R$200.000 p/m;6.81;37;3.1;0;9;0
 15;Mateus Pasinato;30.0;BRA;R$600m - R$1,8M;R$72.500 p/m;7.19;9;1.291;0;13;0
-16;Muriel;37.0;BRA;Não está à venda;R$240.000 p/m;6.73;57;4.476;4;11;0
+16;Muriel;37.0;BRA;Nï¿½o estï¿½ ï¿½ venda;R$240.000 p/m;6.73;57;4.476;4;11;0
 17;Jhonatan;33.0;BRA;R$600m - R$1,8M;R$65.000 p/m;6.33;0;257;1;1;0
 18;Renan;35.0;BRA;R$25m - R$70m;R$100.000 p/m;6.66;50;4.05;0;10;0
-19;Everson;34.0;BRA;Não está à venda;R$520.000 p/m;6.84;51;5.76;2;21;0
+19;Everson;34.0;BRA;Nï¿½o estï¿½ ï¿½ venda;R$520.000 p/m;6.84;51;5.76;2;21;0
 20;Jandrei;31.0;BRA;R$4,5M - R$14M;R$280.000 p/m;6.92;3;517;0;2;0
 21;Bento;25.0;BRA;R$32M - R$96M;R$465.000 p/m;6.99;29;4.356;1;27;0
-22;Rafael;35.0;BRA;Não está à venda;R$120.000 p/m;6.88;82;5.693;4;17;0
+22;Rafael;35.0;BRA;Nï¿½o estï¿½ ï¿½ venda;R$120.000 p/m;6.88;82;5.693;4;17;0
 23;Brenno;25.0;BRA;R$7,5M - R$23M;R$150.000 p/m;6.72;8;666;0;1;0
 24;Marcos Felipe;28.0;BRA;R$5,5M - R$16M;R$240.000 p/m;6.77;53;5.671;1;20;0
 25;Cleiton;27.0;BRA;R$15M - R$46M;R$87.500 p/m;6.88;79;5.76;1;28;0
@@ -28,18 +28,18 @@
 28;Keiller;28.0;BRA;R$3,5M - R$10M;R$120.000 p/m;6.4;4;366;0;3;0
 29;Marcelo Lomba;37.0;BRA;R$350m - R$1,1M;R$190.000 p/m;6.95;9;940;0;4;0
 30;Carlos Miguel;26.0;BRA;R$4,25M - R$13M;R$152.500 p/m;7.1;13;900;0;4;0
-31;João Ricardo;36.0;BRA;R$350m - R$1,1M;R$230.000 p/m;6.83;13;1.15;0;6;0
+31;Joï¿½o Ricardo;36.0;BRA;R$350m - R$1,1M;R$230.000 p/m;6.83;13;1.15;0;6;0
 32;Ronaldo;28.0;BRA;R$600m - R$1,8M;R$100.000 p/m;6.74;18;1.904;0;10;0
 33;Pedro Rangel;24.0;BRA;R$10M - R$31M;R$55.000 p/m;6.91;55;3.46;2;11;0
-34;Léo Linck;23.0;BRA;R$3M - R$8,5M;R$122.500 p/m;6.93;20;1.155;1;5;0
+34;Lï¿½o Linck;23.0;BRA;R$3M - R$8,5M;R$122.500 p/m;6.93;20;1.155;1;5;0
 35;Matheus Mendes;25.0;BRA;R$4M - R$12M;R$50.000 p/m;7.14;2;396;0;3;0
 36;Felipe Alves;36.0;BRA;R$280m - R$800m;R$120.000 p/m;7.05;18;1.546;0;11;0
 37;Matheus Cunha;23.0;BRA;R$7,5M - R$22M;R$220.000 p/m;6.77;7;958;0;4;0
 38;Lucas Arcanjo;26.0;BRA;R$450m - R$1,4M;R$60.000 p/m;6.74;13;890;0;4;0
 39;Gabriel Grando;24.0;BRA;R$4,75M - R$14M;R$165.000 p/m;6.85;0;233;0;2;0
 40;Anderson;26.0;BRA;R$180m - R$550m;R$52.500 p/m;6.84;11;720;0;3;0
-42;Lucão;23.0;BRA;R$2,2M - R$6,5M;R$30.000 p/m;7.15;0;180;0;1;0
-45;Emerson Júnior;24.0;BRA;R$140m - R$450m;R$60.000 p/m;6.1;1;36;0;0;0
+42;Lucï¿½o;23.0;BRA;R$2,2M - R$6,5M;R$30.000 p/m;7.15;0;180;0;1;0
+45;Emerson Jï¿½nior;24.0;BRA;R$140m - R$450m;R$60.000 p/m;6.1;1;36;0;0;0
 46;Alisson;29.0;BRA;R$5m - R$10m;R$19.000 p/m;6.56;46;3.205;2;6;0
 50;Diego;26.0;BRA;R$1,6M - R$4,75M;R$105.000 p/m;6.6;5;353;0;3;0
 53;Maycon Cleiton;26.0;BRA;R$100m - R$300m;R$33.000 p/m;6.8;1;304;0;2;0
@@ -49,5 +49,5 @@
 81;Gustavo Ramalho;22.0;BRA;R$500m - R$1,6M;R$42.000 p/m;6.57;0;252;0;1;0
 87;Gabriel Delfim;22.0;BRA;R$550m - R$1,7M;R$30.000 p/m;6.6;0;54;0;1;0
 88;Anthoni;22.0;BRA;R$550m - R$1,7M;R$49.000 p/m;6.5;0;32;0;0;0
-92;Kauã;20.0;BRA;R$25m - R$70m;R$4.750 p/m;6.58;1;273;0;2;0
+92;Kauï¿½;20.0;BRA;R$25m - R$70m;R$4.750 p/m;6.58;1;273;0;2;0
 103;Dyogo Alves;20.0;BRA;R$0;R$16.000 p/m;7.1;0;41;0;1;0

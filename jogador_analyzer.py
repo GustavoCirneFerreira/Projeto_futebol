@@ -9,27 +9,13 @@ class JogadorAnalyzer:
         for arq in arquivos:
             try:
                 posicao = arq.split("/")[-1].replace(".csv", "")
-                df = pd.read_csv(arq, encoding="latin1", sep=";")
+                df = pd.read_csv(arq, encoding="latin-1", sep=";")
 
                 # Adiciona coluna com a posição
                 df["Posição"] = posicao
 
                 # Converte valor estimado
                 df["Valor Estimado"] = df["Valor Estimado"].apply(self._converter_valor)
-
-                # Trata altura ("177 cm" → 177)
-                if "Altura" in df.columns:
-                    df["Altura"] = df["Altura"].astype(str).str.extract(r"(\d+)").astype(float)
-
-                # Trata distância percorrida ("458,7 km" → 458.7)
-                if "Distancia percorrida" in df.columns:
-                    df["Distancia percorrida"] = (
-                        df["Distancia percorrida"]
-                        .astype(str)
-                        .str.replace(",", ".", regex=False)
-                        .str.extract(r"([\d.]+)")
-                        .astype(float)
-                    )
 
                 self.dfs.append(df)
                 self.dataframes[posicao] = df  # ESSENCIAL para filtro por posição
