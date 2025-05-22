@@ -12,9 +12,7 @@ class JogadorAnalyzer:
                 posicao = arq.split("/")[-1].replace(".csv", "")
                 # Detecta o encoding correto automaticamente
                 # Detectar o encoding correto do arquivo
-                with open(arq, "rb") as f:
-                    encoding_detectado = chardet.detect(f.read())["encoding"]
-                df = pd.read_csv(arq, encoding=encoding_detectado, sep=";")
+                df = pd.read_csv(arq, encoding="UTF-8", sep=";")
 
                 df.columns = df.columns.str.replace("SalÃ¡rio", "Salário")
                 df.columns = df.columns.str.replace("PressÃ£o tentadas", "Pressão tentadas")
