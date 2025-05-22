@@ -26,7 +26,8 @@ def index():
     return render_template("index.html",
                            caracteristicas=caracteristicas,
                            nomes_jogadores=nomes_jogadores,
-                            nacionalidades=nacionalidades)
+                            nacionalidades=nacionalidades,
+                            caracteristicas_selecionadas=[])
 
 @app.route("/filtrar", methods=["POST"])
 def filtrar():
@@ -37,7 +38,7 @@ def filtrar():
     idade= request.form.get("idade")
     nome= request.form.get("nome")
     nacionalidade = request.form.get("nacionalidade")
-
+ 
     try:
         valor = float(valor) if valor else None
     except ValueError:
@@ -55,7 +56,8 @@ def filtrar():
                            tabela=resultado.to_dict(orient="records"),
                            caracteristicas=caracteristicas,
                            nomes_jogadores=nomes_jogadores,
-                           nacionalidades=nacionalidades)
+                           nacionalidades=nacionalidades,
+                           caracteristicas_selecionadas=caracs)
 
 @app.route("/comparar", methods=["POST"])
 def comparar():

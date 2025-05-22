@@ -1,3 +1,4 @@
+import chardet
 import pandas as pd
 import re
 
@@ -9,13 +10,24 @@ class JogadorAnalyzer:
         for arq in arquivos:
             try:
                 posicao = arq.split("/")[-1].replace(".csv", "")
-                df = pd.read_csv(arq, encoding="latin-1", sep=";")
+                # Detecta o encoding correto automaticamente
+                # Detectar o encoding correto do arquivo
+                with open(arq, "rb") as f:
+                    encoding_detectado = chardet.detect(f.read())["encoding"]
+                df = pd.read_csv(arq, encoding=encoding_detectado, sep=";")
+
+                df.columns = df.columns.str.replace("SalÃ¡rio", "Salário")
+                df.columns = df.columns.str.replace("PressÃ£o tentadas", "Pressão tentadas")
 
                 # Adiciona coluna com a posição
                 df["Posição"] = posicao
 
                 # Converte valor estimado
                 df["Valor Estimado"] = df["Valor Estimado"].apply(self._converter_valor)
+                if "Salário" not in df.columns:
+                    df["Salário"] = 0
+                else:
+                    df["Salário"] = df["Salário"].apply(self._converter_salario)
 
                 self.dfs.append(df)
                 self.dataframes[posicao] = df  # ESSENCIAL para filtro por posição
@@ -49,6 +61,24 @@ class JogadorAnalyzer:
             return valor
 
         return 0
+    def _converter_salario(self, salario_str):
+        """
+        Converte salários do tipo "R$500K" ou "R$1.2M" em float.
+        """
+        if not isinstance(salario_str, str):
+            return 0.0
+
+        match = re.search(r"R\$([\d,.]+)([MK]?)", salario_str.replace(".", ""))
+        if match:
+            valor = float(match.group(1).replace(",", "."))
+            mult = match.group(2)
+            if mult == "M":
+                valor *= 1_000_000
+            elif mult == "K":
+                valor *= 1_000
+            return valor
+
+        return 0.0
 
     def get_caracteristicas(self):
         colunas_excluidas = [
@@ -91,6 +121,7 @@ class JogadorAnalyzer:
         if nacionalidade and nacionalidade != "Todas":
             if "Nac" in df.columns:
                 df = df[df["Nac"] == nacionalidade]
+                
 
         # Ordenação pelas características escolhidas
         if caracteristicas:

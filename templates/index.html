@@ -64,9 +64,17 @@
             <th>Idade</th>
             <th>Nacionalidade</th>
             <th>Nota Média</th>
+            <th>Minutos</th>
             <th>Gols</th>
             <th>Assistências</th>
+            <th>Passes Tentados</th>
+            <th>Cruzamentos Tentados</th>
+            <th>Pressão Tentadas</th>
+            <th>Partidas sem sofrer gols</th>
+            <th>Defesas Seguras</th>
+            <th>Penaltis defendidos</th>
             <th>Valor Estimado</th>
+            <th>Salário</th>
         </tr>
         {% for row in tabela %}
         <tr>
@@ -74,10 +82,24 @@
             <td>{{ row['Posição'] }}</td>
             <td>{{ row['Idade'] }}</td>
             <td>{{ row['Nac'] }}</td>
-            <td>{{ row['Nota Media'] }}</td>
+            <td>{{ row['Nota media'] }}</td>
+            <td>{{ row['Minutos'] }}</td>
             <td>{{ row['Gols'] }}</td>
             <td>{{ row['Assistencias'] }}</td>
+            <td>{{ row['Passes tentados'] }}</td>
+            <td>{{ row['Cruzamentos tentados'] }}</td>
+            <td>{{ row['Pressão tentadas'] }}</td>
+            <td>{{ row['Partidas sem sofrer gols'] }}</td>
+            <td>{{ row['Defesas Seguras'] }}</td>
+            <td>{{ row['Penaltis defendidos'] }}</td>
             <td>{{ row['Valor Estimado'] }}</td>
+            <td>
+            {% if row['Salário'] is not none %}
+                R$ {{ "{:,.0f}".format(row['Salário']) | replace(",", ".") }}
+            {% else %}
+                -
+            {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>
