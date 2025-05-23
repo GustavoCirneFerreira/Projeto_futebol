@@ -46,6 +46,9 @@ input, select {
 /* .infos {
   margin-left: 33rem;
 } */
+a {
+  text-decoration: none;
+}
 
 button {
   width: 150px;
