@@ -74,7 +74,11 @@ def comparar():
         nome2: j2[caracteristicas].values
     })
 
-    return render_template("comparacao.html", comparacao=comparacao.to_dict(orient="records"), nome1=nome1, nome2=nome2)
+    imagem = analise.grafico_jogadores(nome1, nome2)
+
+    return render_template("comparacao.html", comparacao=comparacao.to_dict(orient="records"), nome1=nome1, nome2=nome2
+                           , imagem=imagem)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,6 +1,9 @@
 import chardet
 import pandas as pd
 import re
+import matplotlib.pyplot as plt
+import io
+import base64
 
 class JogadorAnalyzer:
     def __init__(self, arquivos):
@@ -290,3 +293,42 @@ class JogadorAnalyzer:
             return None, None
 
         return j1.iloc[0], j2.iloc[0]
+    
+    def grafico_jogadores(self, nome1, nome2):
+        df = self.df_total
+        caracteristicas = self.get_caracteristicas()
+
+        j1 = df[df["Nome"] == nome1]
+        j2 = df[df["Nome"] == nome2]
+
+        if j1.empty or j2.empty:
+            print("Jogador não encontrado.")
+            return None
+
+        try:
+            dados_1 = j1[caracteristicas].values.flatten()
+            dados_2 = j2[caracteristicas].values.flatten()
+
+            x = range(len(caracteristicas))
+
+            plt.figure(figsize=(14, 6))
+            plt.bar(x, dados_1, width=0.4, label=nome1, align='center', color='blue', alpha=0.7)
+            plt.bar([i + 0.4 for i in x], dados_2, width=0.4, label=nome2, align='center', color='green', alpha=0.7)
+            plt.xticks([i + 0.2 for i in x], caracteristicas, rotation=90)
+            plt.xlabel('Características')
+            plt.ylabel('Valor')
+            plt.title(f'Comparação entre {nome1} e {nome2}')
+            plt.legend()
+            plt.tight_layout()
+
+            buffer = io.BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+            imagem_base64 = base64.b64encode(buffer.read()).decode('utf-8')
+            plt.close()
+
+            return imagem_base64
+
+        except Exception as e:
+            print(f"Erro ao gerar gráfico: {e}")
+        return None
