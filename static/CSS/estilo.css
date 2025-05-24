@@ -123,3 +123,9 @@ footer{
 #jd2 {
   margin-left: 10rem ;
 }
+
+.comparador{
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+}
