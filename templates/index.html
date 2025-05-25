@@ -26,7 +26,7 @@
             <input type="number" name="idade" placeholder="Ex: 25" value="{{ request.form.idade or '' }}">
         </div>
         <div class="form-grid">
-            <label class="infos">Característica 1:</label>
+            <label class="infos">Estatística 1:</label>
             <select name="carac1">
                 {% for c in caracteristicas %}
                 <option value="{{ c }}" {% if c in caracteristicas_selecionadas %}selected{% endif %}>{{ c }}</option>
@@ -34,7 +34,7 @@
             </select>
         </div>
         <div class="form-grid">
-            <label class="infos">Característica 2:</label>
+            <label class="infos">Estatística 2:</label>
             <select name="carac2">
                 {% for c in caracteristicas %}
                 <option value="{{ c }}" {% if c in caracteristicas_selecionadas %}selected{% endif %}>{{ c }}</option>

@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
+import matplotlib
+matplotlib.use("Agg")  # ⬅️ Força backend de renderização sem interface gráfica
 import matplotlib.pyplot as plt
 import uuid
 import os

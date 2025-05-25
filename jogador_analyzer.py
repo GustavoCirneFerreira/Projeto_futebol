@@ -333,10 +333,10 @@ class JogadorAnalyzer:
 
             plt.bar(x, dados_1, width=0.4, label=nome1, align='center', color='royalblue', alpha=0.85)
             plt.bar([i + 0.4 for i in x], dados_2, width=0.4, label=nome2, align='center', color='green', alpha=0.85)
+            
 
             plt.xticks([i + 0.2 for i in x], todas_caracteristicas, rotation=45, ha='right', fontsize=9, color='white')
             plt.yticks(color='white')
-            plt.xlabel('Características', color='white')
             plt.ylabel('Valor', color='white')
             plt.title(f'Comparação: {nome1} vs {nome2}', fontsize=12, color='white')
             plt.grid(axis='y', linestyle='--', alpha=0.3)
