@@ -10,9 +10,11 @@
 <body>
     <div class="container">
         <h2>Informações básicas</h2>
+        <!-- Estrutura da tabela com dados do jogador. -->
         <div class="tabela">
             <table id="customers">
                 <tr>
+                    <!-- Linha de cabeçalho com títulos das colunas. -->
                     <th>Nome</th>
                     <th>Idade</th>
                     <th>Nacionalidade</th>
@@ -20,6 +22,7 @@
                     <th>Salário</th>
                 </tr>
                 <tr>
+                    <!-- Linha com os valores reais do jogador. -->
                     <td>{{ info['Nome'] }}</td>
                     <td>{{ info['Idade'] }}</td>
                     <td>{{ info['Nac'] }}</td>
@@ -31,8 +34,10 @@
 
         <div class="grafico">
             <h2>Gráfico de estatísticas</h2>
+            <!-- Insere a imagem do gráfico gerado no back-end (Flask). -->
             <img src="{{ url_for('static', filename=imagem_grafico) }}" alt="Gráfico de estatísticas">
         </div>
+        <!-- Botão que redireciona de volta para a página inicial (/). -->
         <a href="/"><button>Voltar</button></a>
     </div>
 </body>

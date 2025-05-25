@@ -6,7 +6,9 @@ import io
 import base64
 
 
+# Gerencia todos os dados dos jogadores, incluindo carregamento, limpeza, filtragem e gráficos.
 class JogadorAnalyzer:
+    # Corrige e converte oq está errado, e armazenatudo em um grande dataframe
     def __init__(self, arquivos):
         self.dfs = []
         self.dataframes = {}
@@ -212,6 +214,7 @@ class JogadorAnalyzer:
         if match:
             valor = float(match.group(1).replace(",", "."))
             mult = match.group(2)
+            # Multiplica por 1_000_000 se tiver M, ou 1_000 se tiver K
             if mult == "M":
                 valor *= 1_000_000
             elif mult == "K":
@@ -230,6 +233,7 @@ class JogadorAnalyzer:
         if match:
             valor = float(match.group(1).replace(",", "."))
             mult = match.group(2)
+            # Multiplica por 1_000_000 se tiver M, ou 1_000 se tiver K
             if mult == "M":
                 valor *= 1_000_000
             elif mult == "K":
@@ -238,6 +242,7 @@ class JogadorAnalyzer:
 
         return 0.0
 
+    # Retorna apenas colunas numéricas úteis (exclui Nome, Idade, etc).
     def get_caracteristicas(self):
         colunas_excluidas = [
             "Nome", "Posição", "Valor Estimado", "Clube",
@@ -245,14 +250,17 @@ class JogadorAnalyzer:
         ]
         return [col for col in self.df_total.columns if col not in colunas_excluidas and pd.api.types.is_numeric_dtype(self.df_total[col])]
 
+    # Lista os nomes únicos dos jogadores.
     def get_nomes_jogadores(self):
         return self.df_total["Nome"].dropna().tolist()
 
+    # Retorna todas as nacionalidades únicas.
     def get_nacionalidades(self):
         if "Nac" in self.df_total.columns:
             return sorted(self.df_total["Nac"].dropna().astype(str).unique().tolist())
         return []
 
+    # Filtra jogadores e retorna o dataframe filtrado
     def filtrar_jogadores(self, posicao, valor=None, caracteristicas=None, idade=None, nome=None, nacionalidade=None):
         # Se tiver posição específica
         if posicao and posicao != "Todas":
@@ -289,6 +297,7 @@ class JogadorAnalyzer:
 
         return df
 
+    # Retorna as linhas correspondentes aos dois jogadores escolhidos (ou None se não encontrados).
     def comparar_jogadores(self, nome1, nome2):
         df = self.df_total
         j1 = df[df["Nome"] == nome1]
@@ -299,6 +308,7 @@ class JogadorAnalyzer:
 
         return j1.iloc[0], j2.iloc[0]
     
+    # Gera um gráfico comparando os dois jogadores
     def grafico_jogadores(self, nome1, nome2):
         df = self.df_total
         caracteristicas = self.get_caracteristicas()
