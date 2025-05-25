@@ -1,81 +1,80 @@
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
-    {% block conteudo %}
-    <h1>Filtrar Jogadores</h1>
-    <div id="caixa_filtro">
-        <form method="POST" action="/filtrar">
-                <div id class="form-grid">
-                    <label class="infos">Posição:</label>
-                    <select name="posicao">
-                        <option value="Todas">Todas</option>
-                        {% for p in ['goleiros', 'laterais', 'zagueiros', 'volantes', 'boxtobox', 'armadores', 'atacantes'] %}
-                        <option value="{{ p }}">{{ p.capitalize() }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div id class="form-grid">
-                    <label class="infos">Nome do Jogador:</label>
-                        <input type="text" placeholder="Ex: Ganso" name="nome">
-                </div>    
+{% block conteudo %}
+<h1>Filtrar Jogadores</h1>
+<div id="caixa_filtro">
+    <form method="POST" action="{{ url_for('filtrar') }}">
+        <div class="form-grid">
+            <label class="infos">Posição:</label>
+            <select name="posicao">
+                <option value="Todas" {% if (request.form.posicao or '') == 'Todas' %}selected{% endif %}>Todas</option>
+                {% for p in ['goleiros', 'laterais', 'zagueiros', 'volantes', 'boxtobox', 'armadores', 'atacantes'] %}
+                <option value="{{ p }}" {% if (request.form.posicao or '') == p %}selected{% endif %}>{{ p.capitalize() }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-grid">
+            <label class="infos">Nome do Jogador:</label>
+            <input type="text" placeholder="Ex: Ganso" name="nome" value="{{ request.form.nome or '' }}">
+        </div>    
+        <div class="form-grid">
+            <label class="infos">Valor Máximo:</label>
+            <input type="number" name="valor" placeholder="Ex: 1000000" value="{{ request.form.valor or '' }}">
+        </div>
+        <div class="form-grid">
+            <label class="infos">Idade:</label>
+            <input type="number" name="idade" placeholder="Ex: 25" value="{{ request.form.idade or '' }}">
+        </div>
+        <div class="form-grid">
+            <label class="infos">Característica 1:</label>
+            <select name="carac1">
+                {% for c in caracteristicas %}
+                <option value="{{ c }}" {% if c in caracteristicas_selecionadas %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-grid">
+            <label class="infos">Característica 2:</label>
+            <select name="carac2">
+                {% for c in caracteristicas %}
+                <option value="{{ c }}" {% if c in caracteristicas_selecionadas %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-grid">
+            <label class="infos">Nacionalidade:</label>
+            <select name="nacionalidade">
+                <option value="">Todas</option>
+                {% for n in nacionalidades %}
+                <option value="{{ n }}" {% if request.form.nacionalidade == n %}selected{% endif %}>{{ n }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button id="filtrar" type="submit">Filtrar</button>  
+    </form>
+</div>
 
-                <div class="form-grid">
-                    <label class="infos">Valor Máximo:</label>
-                        <input type="number" name="valor" placeholder="Ex: 1000000">
-                </div>
-                <div class="form-grid">
-                    <label class="infos">Idade:</label>
-                        <input type="number" name="idade" placeholder="Ex: 25">
-                </div>
-
-                <div class="form-grid">
-                    <label class="infos">Característica 1:</label>
-                        <select name="carac1">
-                            {% for c in caracteristicas %}
-                            <option value="{{ c }}">{{ c }}</option>
-                            {% endfor %}
-                        </select>
-                </div>
-                <div class="form-grid">
-                        <label class="infos">Característica 2:</label>
-                        <select name="carac2">
-                            {% for c in caracteristicas %}
-                            <option value="{{ c }}">{{ c }}</option>
-                            {% endfor %}
-                        </select>
-               </div>
-                <div class="form-grid">
-                        <label class="infos">Nacionalidade:</label>
-                        <select name="nacionalidade">
-                            <option value="">Todas</option>
-                            {% for n in nacionalidades %}
-                                <option value="{{ n }}">{{ n }}</option>
-                            {% endfor %}
-                        </select>
-               </div>
-                <button id="filtrar" type="submit">Filtrar</button>  
-        </form>
-    </div>
-
-    <h1>Jogadores Filtrados</h1>
-    <table id="customers" border="1">
-        <tr>
-            <th>Nome</th>
-            <th>Posição</th>
-            <th>Idade</th>
-            <th>Nacionalidade</th>
-            <th>Nota Média</th>
-            <th>Minutos</th>
-            <th>Gols</th>
-            <th>Assistências</th>
-            <th>Passes Tentados</th>
-            <th>Cruzamentos Tentados</th>
-            <th>Pressão Tentadas</th>
-            <th>Partidas sem sofrer gols</th>
-            <th>Defesas Seguras</th>
-            <th>Penaltis defendidos</th>
-            <th>Valor Estimado</th>
-            <th>Salário</th>
-        </tr>
+<h1>Jogadores Filtrados</h1>
+<table id="customers" border="1">
+    <tr>
+        <th>Nome</th>
+        <th>Posição</th>
+        <th>Idade</th>
+        <th>Nacionalidade</th>
+        <th>Nota Média</th>
+        <th>Minutos</th>
+        <th>Gols</th>
+        <th>Assistências</th>
+        <th>Passes Tentados</th>
+        <th>Cruzamentos Tentados</th>
+        <th>Pressão Tentadas</th>
+        <th>Partidas sem sofrer gols</th>
+        <th>Defesas Seguras</th>
+        <th>Penaltis defendidos</th>
+        <th>Valor Estimado</th>
+        <th>Salário</th>
+    </tr>
+    {% if tabela %}
         {% for row in tabela %}
         <tr>
             <td>{{ row['Nome'] }}</td>
@@ -94,34 +93,37 @@
             <td>{{ row['Penaltis defendidos'] }}</td>
             <td>{{ row['Valor Estimado'] }}</td>
             <td>
-            {% if row['Salário'] is not none %}
-                R$ {{ "{:,.0f}".format(row['Salário']) | replace(",", ".") }}
-            {% else %}
-                -
-            {% endif %}
+                {% if row['Salário'] is not none and row['Salário'] != 0 %}
+                    R$ {{ "{:,.0f}".format(row['Salário']) | replace(",", ".") }}
+                {% else %}
+                    -
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
-    </table>
-        
-    <footer>
-        <h2>Comparar Jogadores</h2>
-        <form method="POST" action="/comparar">
-            <label id="jd1">Jogador 1:</label>
-            <select name="jogador1">
-                {% for nome in nomes_jogadores %}
-                    <option value="{{ nome }}">{{ nome }}</option>
-                {% endfor %}
-            </select>
+    {% else %}
+        <tr><td colspan="16" style="text-align:center;">Nenhum jogador encontrado.</td></tr>
+    {% endif %}
+</table>
 
-            <label id="jd2">Jogador 2:</label>
-            <select name="jogador2">
-                {% for nome in nomes_jogadores %}
-                    <option value="{{ nome }}">{{ nome }}</option>
-                {% endfor %}
-            </select>
+<footer>
+    <h2>Comparar Jogadores</h2>
+    <form method="POST" action="/comparar">
+        <label id="jd1">Jogador 1:</label>
+        <select name="jogador1">
+            {% for nome in nomes_jogadores %}
+            <option value="{{ nome }}">{{ nome }}</option>
+            {% endfor %}
+        </select>
 
-            <button id="comp" type="submit">Comparar</button>
-        </form>
-    </footer>
-    {% endblock %}
+        <label id="jd2">Jogador 2:</label>
+        <select name="jogador2">
+            {% for nome in nomes_jogadores %}
+            <option value="{{ nome }}">{{ nome }}</option>
+            {% endfor %}
+        </select>
+
+        <button id="comp" type="submit">Comparar</button>
+    </form>
+</footer>
+{% endblock %}
