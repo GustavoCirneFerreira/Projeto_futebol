@@ -14,7 +14,7 @@ h1 {
 }
 
 #caixa_filtro {
-    background-color: #be9063;
+    background-color: #41424C;
     border-radius: 10px;
     margin-left: 30%;
     margin-right: 30%;
@@ -105,12 +105,12 @@ tr:nth-child(even) {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #be9063;
+  background-color: #41424C;
   color: white;
 }
 
 footer{
-    background-color: #be9063;
+    background-color: #41424C;
     border-radius: 10px;
     text-align: center;
     align-items: center;

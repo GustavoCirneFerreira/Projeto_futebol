@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
 import matplotlib.pyplot as plt
 from jogador_analyzer import JogadorAnalyzer
+import uuid
+import os
+
 
 app = Flask(__name__)
 
@@ -102,17 +105,33 @@ def jogador():
         caracteristicas = [c for c in analise.get_caracteristicas() if c in dados_jogador.index]
         dados_grafico = {carac: dados_jogador[carac] for carac in caracteristicas}
 
-        plt.figure(figsize=(8, 4))
+        # Gera nome único para o gráfico
+        nomearquivo = f"grafico{uuid.uuid4().hex}.png"
+        caminho_arquivo = os.path.join('static', nomearquivo)
+
+        # Criação do gráfico com fundo transparente real
+        plt.figure(figsize=(10, 5))
+        fig = plt.gcf()
+        fig.patch.set_alpha(0.0)  # Fundo da figura transparente
+
         nomes = list(dados_grafico.keys())
         valores = list(dados_grafico.values())
-        barras = plt.bar(nomes, valores, color='royalblue')
+
+        barras = plt.bar(nomes, valores, color='royalblue', width=0.5)
+
+        limite_superior = max(valores) * 1.15
+        plt.ylim(0, limite_superior)
+
         for i, valor in enumerate(valores):
-            plt.text(i, valor + max(valores)*0.03, f'{valor:.2f}', ha='center', fontsize=10)
+            plt.text(i, valor + limite_superior * 0.015, f'{valor:.2f}', ha='center', fontsize=10)
+
+        plt.xticks(rotation=45)
+        plt.grid(axis='y', linestyle='--', alpha=0.3)
         plt.tight_layout()
-        plt.savefig('static/grafico.png')
+        plt.savefig(caminho_arquivo, transparent=True)
         plt.close()
 
-        return render_template('jogador.html', info=dados_jogador)
+        return render_template('jogador.html', info=dados_jogador, imagem_grafico=nomearquivo)
     else:
         return f"Jogador '{nome}' não encontrado na posição '{posicao}'."
     

@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <title>Perfil do Jogador</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/estilo.css')}}">
 </head>
 <body>
     <div class="container">
+        <h1>Informações do Jogador</h>
+        <br>
         <div class="tabela">
-            <h2>Informações básicas</h2>
-            <table>
+            <table id="customers">
+                <tr>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Nacionalidade</th>
+                    <th>Valor Estimado</th>
+                    <th>Salário</th>
+                </tr>
+
                 <tr>
                     <td>{{ info['Nome'] }}</td>
                     <td>{{ info['Idade'] }}</td>
@@ -19,10 +29,12 @@
                 </tr>
             </table>
         </div>
+        
+        <br>
 
         <div class="grafico">
             <h2>Gráfico de estatísticas</h2>
-            <img src="{{ url_for('static', filename='grafico.png') }}" alt="Gráfico de estatísticas">
+            <img src="{{ url_for('static', filename=imagem_grafico) }}" alt="Gráfico de estatísticas">
         </div>
     </div>
 </body>

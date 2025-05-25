@@ -315,10 +315,10 @@ class JogadorAnalyzer:
 
             x = range(len(caracteristicas))
 
-            plt.figure(figsize=(14, 6))
+            plt.figure(figsize=(10, 5))
             plt.bar(x, dados_1, width=0.4, label=nome1, align='center', color='blue', alpha=0.7)
             plt.bar([i + 0.4 for i in x], dados_2, width=0.4, label=nome2, align='center', color='green', alpha=0.7)
-            plt.xticks([i + 0.2 for i in x], caracteristicas, rotation=90)
+            plt.xticks([i + 0.2 for i in x], caracteristicas, rotation=30)
             plt.xlabel('Características')
             plt.ylabel('Valor')
             plt.title(f'Comparação entre {nome1} e {nome2}')
