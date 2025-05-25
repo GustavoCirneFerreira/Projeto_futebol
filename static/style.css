@@ -10,15 +10,8 @@ body {
     width: 90%;
     height: 900px;
     display: grid;
-    background-color: #6280f2;
     margin: 50px auto;
-    width: 90%;
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 30px;
-    border-radius: 10px;
+    justify-content: center;
 }
 
 .tabela, .grafico {

@@ -13,7 +13,6 @@ class JogadorAnalyzer:
         for arq in arquivos:
             try:
                 posicao = arq.split("/")[-1].replace(".csv", "")
-                df = pd.read_csv(arq, encoding="utf-8", sep=";")
                 
                 # Detectar o encoding correto do arquivo
 
