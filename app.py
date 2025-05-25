@@ -72,10 +72,18 @@ def comparar():
     if j1 is None or j2 is None:
         return "Jogador não encontrado.", 400
 
+    # Características numéricas comuns
+    num1 = j1.to_frame().T.select_dtypes(include='number')
+    num2 = j2.to_frame().T.select_dtypes(include='number')
+
+    caracteristicas_comuns = [col for col in num1.index if col in num2.index and 
+                              col not in ['Idade', 'Salário']]
+
+
     comparacao = pd.DataFrame({
-        "Caracteristica": caracteristicas,
-        nome1: j1[caracteristicas].values,
-        nome2: j2[caracteristicas].values
+        "Caracteristica": caracteristicas_comuns,
+        nome1: [j1[col].item() for col in caracteristicas_comuns],
+        nome2: [j2[col].item() for col in caracteristicas_comuns]
     })
 
     imagem = analise.grafico_jogadores(nome1, nome2)
@@ -137,5 +145,5 @@ def jogador():
     else:
         return f"Jogador '{nome}' não encontrado na posição '{posicao}'."
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     app.run(debug=True)
