@@ -4,6 +4,15 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.comp_container {
+    background-color: #41424C;
+    margin: 50px auto;
+    width: 90%;
+    height: 1300px;
+    display: grid;
+    margin: 50px auto;
+    justify-content: center;
+}
 
 /* usa layout em grade (facilita alinhamento dos elementos internos) */
 .container {

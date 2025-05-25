@@ -1,37 +1,38 @@
 {% extends 'base.html' %}
 
     {% block conteudo %}
-    <h1>
-        Comparando 
-        <a id="estilo_nome" href="{{ url_for('jogador') }}?nome={{ nome1 }}&posicao={{ pos1 }}">{{ nome1 }}</a>
-        x
-        <a id="estilo_nome" href="{{ url_for('jogador') }}?nome={{ nome2 }}&posicao={{ pos2 }}">{{ nome2 }}</a>
-    </h1>
+    <div class="comp_container">
+        <h1>
+            Comparando 
+            <a id="estilo_nome" href="{{ url_for('jogador') }}?nome={{ nome1 }}&posicao={{ pos1 }}">{{ nome1 }}</a>
+            x
+            <a id="estilo_nome" href="{{ url_for('jogador') }}?nome={{ nome2 }}&posicao={{ pos2 }}">{{ nome2 }}</a>
+        </h1>
 
-    <table id="customers" border="1">
-        <tr>
-            <th>Característica</th>
-            <th>{{ nome1 }}</th>
-            <th>{{ nome2 }}</a></th>
-        </tr>
-        {% for row in comparacao %}
-        <tr>
-            <td>{{ row['Caracteristica'] }}</td>
-            <td>{{ row[nome1] }}</td>
-            <td>{{ row[nome2] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <div class="comparador">
-        <h2>Gráfico de Comparação</h2>
-        {% if imagem %}
-            <img src="data:image/png;base64,{{ imagem }}" alt="Gráfico de comparação">
-        {% else %}
-            <p>Erro ao gerar gráfico</p>
-        {% endif %}
+        <table class="tabela" id="customers" border="1">
+            <tr>
+                <th>Característica</th>
+                <th>{{ nome1 }}</th>
+                <th>{{ nome2 }}</a></th>
+            </tr>
+            {% for row in comparacao %}
+            <tr>
+                <td>{{ row['Caracteristica'] }}</td>
+                <td>{{ row[nome1] }}</td>
+                <td>{{ row[nome2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <div class="comparador">
+            <h2>Gráfico de Comparação</h2>
+            {% if imagem %}
+                <img src="data:image/png;base64,{{ imagem }}" alt="Gráfico de comparação">
+            {% else %}
+                <p>Erro ao gerar gráfico</p>
+            {% endif %}
+        </div>
+        <br>
+        <a href="/"><button>Voltar</button></a>
     </div>
-    <br>
-    <a href="/"><button>Voltar</button></a>
-    
     {% endblock %}
