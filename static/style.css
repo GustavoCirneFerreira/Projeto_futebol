@@ -17,7 +17,7 @@ body {
 }
 
 .tabela, .grafico {
-    background-color: white;
+    background-color: transparent;
     padding: 20px;
     border-radius: 5px;
 }

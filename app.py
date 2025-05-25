@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
 import matplotlib.pyplot as plt
+import uuid
+import os
 from jogador_analyzer import JogadorAnalyzer
 
 app = Flask(__name__)
@@ -38,18 +40,9 @@ def filtrar():
     nome= request.form.get("nome")
     nacionalidade = request.form.get("nacionalidade")
 
-    # Se o usuário digitou o nome do jogador, tentar redirecionar para a página individual
-    if nome and nome.strip() != "":
-        if posicao == "Todas":
-            for pos, df in analise.dataframes.items():
-                if nome in df["Nome"].values:
-                    return redirect(url_for("jogador", nome=nome, posicao=pos))
-        else:
-            df = analise.dataframes.get(posicao)
-            if df is not None and nome in df["Nome"].values:
-                return redirect(url_for("jogador", nome=nome, posicao=posicao))
+    # Remover redirecionamento automático para página do jogador para evitar ir direto
+    # Apenas filtra e exibe lista com resultados
 
-    # Continua com filtro normal caso não tenha nome ou jogador não encontrado
     try:
         valor = float(valor) if valor else None
     except ValueError:
@@ -94,27 +87,55 @@ def jogador():
     nome = request.args.get('nome')
     posicao = request.args.get('posicao')
 
+    if not nome or not posicao:
+        return "Parâmetros 'nome' e 'posicao' são obrigatórios."
+
     df = analise.dataframes.get(posicao)
     if df is not None and nome in df['Nome'].values:
         dados_jogador = df[df['Nome'] == nome].iloc[0]
 
-        # Filtra características que existem para esse jogador
         caracteristicas = [c for c in analise.get_caracteristicas() if c in dados_jogador.index]
         dados_grafico = {carac: dados_jogador[carac] for carac in caracteristicas}
 
-        plt.figure(figsize=(8, 4))
+        if not dados_grafico:
+            return "Nenhuma característica válida encontrada para esse jogador."
+
+        nome_arquivo = f"grafico_{uuid.uuid4().hex}.png"
+        caminho_arquivo = os.path.join('static', nome_arquivo)
+
+        plt.figure(figsize=(10, 5))
+        fig = plt.gcf()
+        fig.patch.set_alpha(0.0)  # Fundo transparente
+
         nomes = list(dados_grafico.keys())
         valores = list(dados_grafico.values())
-        barras = plt.bar(nomes, valores, color='royalblue')
+
+        plt.bar(nomes, valores, color='royalblue', width=0.5)
+
+        limite_superior = max(valores) * 1.15
+        plt.ylim(0, limite_superior)
+
         for i, valor in enumerate(valores):
-            plt.text(i, valor + max(valores)*0.03, f'{valor:.2f}', ha='center', fontsize=10)
+            plt.text(i, valor + limite_superior * 0.015, f'{valor:.2f}', ha='center', fontsize=10, color='white')
+
+        plt.xticks(rotation=45, color='white')  # Nomes das estatísticas em branco
+        plt.yticks(color='white')                # Números do eixo y em branco
+
+        ax = plt.gca()
+        for spine in ax.spines.values():         # Borda branca
+            spine.set_color('white')
+
+        ax.tick_params(axis='x', colors='white')  # Ticks eixo X em branco (linha pequena)
+        ax.tick_params(axis='y', colors='white')  # Ticks eixo Y em branco
+
+        plt.grid(axis='y', linestyle='--', alpha=0.3)
         plt.tight_layout()
-        plt.savefig('static/grafico.png')
+        plt.savefig(caminho_arquivo, transparent=True)
         plt.close()
 
-        return render_template('jogador.html', info=dados_jogador)
+        return render_template('jogador.html', info=dados_jogador, imagem_grafico=nome_arquivo)
     else:
         return f"Jogador '{nome}' não encontrado na posição '{posicao}'."
-    
+
 if __name__ == "__main__":
     app.run(debug=True)

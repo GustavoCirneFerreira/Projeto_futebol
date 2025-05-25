@@ -77,7 +77,7 @@
     {% if tabela %}
         {% for row in tabela %}
         <tr>
-            <td>{{ row['Nome'] }}</td>
+            <td><a href="{{ url_for('jogador') }}?nome={{ row['Nome'] }}&posicao={{ row['Posição'] }}">{{ row['Nome'] }}</a></td>
             <td>{{ row['Posição'] }}</td>
             <td>{{ row['Idade'] }}</td>
             <td>{{ row['Nac'] }}</td>
