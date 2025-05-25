@@ -77,10 +77,20 @@ def comparar():
         nome1: j1[caracteristicas].values,
         nome2: j2[caracteristicas].values
     })
+    
+    
+    df = analise.df_total
+    pos1 = df[df['Nome'] == nome1]['Posição'].values[0]
+    pos2 = df[df['Nome'] == nome2]['Posição'].values[0]
 
     imagem = analise.grafico_jogadores(nome1, nome2)
 
-    return render_template("comparacao.html", comparacao=comparacao.to_dict(orient="records"), nome1=nome1, nome2=nome2, imagem=imagem)
+    return render_template("comparacao.html",
+                            comparacao=comparacao.to_dict(orient="records"),
+                            nome1=nome1, nome2=nome2,
+                            pos1=pos1, pos2=pos2,
+                            imagem=imagem
+                    )
 
 @app.route('/jogador')
 def jogador():

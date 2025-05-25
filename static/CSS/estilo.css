@@ -64,6 +64,16 @@ a:hover{
   color: #41424C;
 }
 
+#estilo_nome {
+  color: white;
+  text-decoration: none;
+}
+
+#estilo_nome:hover {
+  text-decoration: #41424C underline;
+  
+}
+
 button {
   align-items: center;
   appearance: none;

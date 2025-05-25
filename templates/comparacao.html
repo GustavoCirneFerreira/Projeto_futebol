@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
     {% block conteudo %}
-    <h1>Comparando {{ nome1 }} x {{ nome2 }}</h1>
+    <h1>
+        Comparando 
+        <a id="estilo_nome" href="{{ url_for('jogador') }}?nome={{ nome1 }}&posicao={{ pos1 }}">{{ nome1 }}</a>
+        x
+        <a id="estilo_nome" href="{{ url_for('jogador') }}?nome={{ nome2 }}&posicao={{ pos2 }}">{{ nome2 }}</a>
+    </h1>
+
     <table id="customers" border="1">
         <tr>
             <th>Característica</th>

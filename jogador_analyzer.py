@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
+
 class JogadorAnalyzer:
     def __init__(self, arquivos):
         self.dfs = []
@@ -22,6 +23,7 @@ class JogadorAnalyzer:
                 # Converte os nomes escritos errados no CSV em corretos
                 df.columns = df.columns.str.replace("SalÃ¡rio", "Salário")
                 df.columns = df.columns.str.replace("PressÃ£o tentadas", "Pressão tentadas")
+                df["Valor Estimado"] = df["Valor Estimado"].str.replace("N�o est� � venda", "Não está à venda")
                 df["Nome"] = df["Nome"].replace({"Vitor Gon�alves": "Vitor Gonçalves"})
                 df["Nome"] = df["Nome"].replace({"Jo�o Artur": "João Artur"})
                 df["Nome"] = df["Nome"].replace({"Jo�o Victor Silva": "João Victor Silva"})
@@ -309,23 +311,48 @@ class JogadorAnalyzer:
             return None
 
         try:
-            dados_1 = j1[caracteristicas].values.flatten()
-            dados_2 = j2[caracteristicas].values.flatten()
+            j1_dados = j1.iloc[0]
+            j2_dados = j2.iloc[0]
 
-            x = range(len(caracteristicas))
+            todas_caracteristicas = sorted(set(
+                [c for c in caracteristicas if isinstance(j1_dados.get(c, 0), (int, float)) or isinstance(j2_dados.get(c, 0), (int, float))]
+            ))
+
+            if not todas_caracteristicas:
+                print("⚠️ Nenhuma característica comparável encontrada.")
+                return None
+
+            dados_1 = [j1_dados.get(c, 0) if isinstance(j1_dados.get(c, 0), (int, float)) else 0 for c in todas_caracteristicas]
+            dados_2 = [j2_dados.get(c, 0) if isinstance(j2_dados.get(c, 0), (int, float)) else 0 for c in todas_caracteristicas]
+
+            x = range(len(todas_caracteristicas))
 
             plt.figure(figsize=(14, 6))
-            plt.bar(x, dados_1, width=0.4, label=nome1, align='center', color='blue', alpha=0.7)
-            plt.bar([i + 0.4 for i in x], dados_2, width=0.4, label=nome2, align='center', color='green', alpha=0.7)
-            plt.xticks([i + 0.2 for i in x], caracteristicas, rotation=90)
-            plt.xlabel('Características')
-            plt.ylabel('Valor')
-            plt.title(f'Comparação entre {nome1} e {nome2}')
+            fig = plt.gcf()
+            fig.patch.set_alpha(0.0)
+
+            plt.bar(x, dados_1, width=0.4, label=nome1, align='center', color='royalblue', alpha=0.85)
+            plt.bar([i + 0.4 for i in x], dados_2, width=0.4, label=nome2, align='center', color='green', alpha=0.85)
+
+            plt.xticks([i + 0.2 for i in x], todas_caracteristicas, rotation=45, ha='right', fontsize=9, color='white')
+            plt.yticks(color='white')
+            plt.xlabel('Características', color='white')
+            plt.ylabel('Valor', color='white')
+            plt.title(f'Comparação: {nome1} vs {nome2}', fontsize=12, color='white')
+            plt.grid(axis='y', linestyle='--', alpha=0.3)
+
+            ax = plt.gca()
+            for spine in ax.spines.values():
+                spine.set_color('white')
+
+            ax.tick_params(axis='x', colors='white')
+            ax.tick_params(axis='y', colors='white')
+
             plt.legend()
             plt.tight_layout()
 
             buffer = io.BytesIO()
-            plt.savefig(buffer, format='png')
+            plt.savefig(buffer, format='png', transparent=True)
             buffer.seek(0)
             imagem_base64 = base64.b64encode(buffer.read()).decode('utf-8')
             plt.close()
@@ -334,4 +361,4 @@ class JogadorAnalyzer:
 
         except Exception as e:
             print(f"Erro ao gerar gráfico: {e}")
-        return None
+            return None
