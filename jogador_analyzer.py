@@ -13,6 +13,7 @@ class JogadorAnalyzer:
         for arq in arquivos:
             try:
                 posicao = arq.split("/")[-1].replace(".csv", "")
+                df = pd.read_csv(arq, encoding="utf-8", sep=";")
                 
                 # Detectar o encoding correto do arquivo
 
@@ -174,21 +175,24 @@ class JogadorAnalyzer:
                 # Adiciona coluna com a posição
                 df["Posição"] = posicao
 
-                # Converte valor estimado
+                # Mantém valor estimado original para exibição
+                df["Valor Estimado Original"] = df["Valor Estimado"].copy()
+
+                # Converte valor estimado para float para filtros
                 df["Valor Estimado"] = df["Valor Estimado"].apply(self._converter_valor)
-                
+
+                # Converte salário para float
                 if "Salário" not in df.columns:
                     df["Salário"] = 0
                 else:
                     df["Salário"] = df["Salário"].apply(self._converter_salario)
 
                 self.dfs.append(df)
-                self.dataframes[posicao] = df  # ESSENCIAL para filtro por posição
+                self.dataframes[posicao] = df
 
             except Exception as e:
                 print(f"[ERRO] Falha ao carregar '{arq}': {e}")
 
-        # Junta todos os dataframes, se houver
         if self.dfs:
             self.df_total = pd.concat(self.dfs, ignore_index=True)
             self.df_total.fillna(0, inplace=True)
