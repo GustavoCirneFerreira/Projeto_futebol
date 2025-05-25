@@ -14,7 +14,7 @@ h1 {
 }
 
 #caixa_filtro {
-    background-color: #be9063;
+    background-color: #41424C;
     border-radius: 10px;
     margin-left: 30%;
     margin-right: 30%;
@@ -42,6 +42,19 @@ label{
 input, select {
   height: 120%;
 }  
+
+input[type=text]:focus {
+  border: 3px solid #555;
+}
+input[type=number]:focus {
+  border: 3px unset #555;
+}
+
+select {
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+}
 
 /* .infos {
   margin-left: 33rem;
@@ -105,12 +118,12 @@ tr:nth-child(even) {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #be9063;
+  background-color: #41424C;
   color: white;
 }
 
 footer{
-    background-color: #be9063;
+    background-color: #41424C;
     border-radius: 10px;
     text-align: center;
     align-items: center;

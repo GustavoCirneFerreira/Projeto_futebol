@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil do Jogador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/estilo.css')}}">
+
+</head>
+<body>
+    <div class="container">
+        <div class="tabela">
+            <h2>Informações básicas</h2>
+            <table id="customers">
+                <tr>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Nacionalidade</th>
+                    <th>Valor Estimado</th>
+                    <th>Salário</th>
+                </tr>
+                <tr>
+                    <td>{{ info['Nome'] }}</td>
+                    <td>{{ info['Idade'] }}</td>
+                    <td>{{ info['Nac'] }}</td>
+                    <td>{{ info['Valor Estimado Original'] }}</td>
+                    <td>{{ info['Salário'] }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="grafico">
+            <h2>Gráfico de estatísticas</h2>
+            <img src="{{ url_for('static', filename=imagem_grafico) }}" alt="Gráfico de estatísticas">
+        </div>
+    </div>
+</body>
+</html>
