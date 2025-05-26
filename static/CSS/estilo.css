@@ -18,8 +18,8 @@ h1 {
 #caixa_filtro {
     background-color: #41424C; /* fundo escuro */
     border-radius: 10px; /* cantos arredondados */
-    margin-left: 30%; /* centralizada horizontalmente com margin-left/right */ 
-    margin-right: 30%;
+    margin-left: 15%; /* centralizada horizontalmente com margin-left/right */ 
+    margin-right: 15%;
 }
 
 .form-grid {
