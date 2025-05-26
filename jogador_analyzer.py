@@ -277,7 +277,7 @@ class JogadorAnalyzer:
 
         # Filtro por idade
         if idade:
-            df = df[df["Idade"] == idade]
+            df = df[df["Idade"] <= idade]
 
         # Filtro por valor
         if valor:

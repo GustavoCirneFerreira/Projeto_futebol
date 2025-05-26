@@ -29,7 +29,7 @@
         <!-- Permite selecionar duas estatísticas para ordenar os jogadores. -->
         <div class="form-grid">
             <label class="infos">Estatística 1:</label>
-            <select name="carac1">
+            <select name="carac2">
                 {% for c in caracteristicas %}
                 <option value="{{ c }}" {% if c in caracteristicas_selecionadas %}selected{% endif %}>{{ c }}</option>
                 {% endfor %}
@@ -37,7 +37,7 @@
         </div>
         <div class="form-grid">
             <label class="infos">Estatística 2:</label>
-            <select name="carac2">
+            <select name="carac1">
                 {% for c in caracteristicas %}
                 <option value="{{ c }}" {% if c in caracteristicas_selecionadas %}selected{% endif %}>{{ c }}</option>
                 {% endfor %}
