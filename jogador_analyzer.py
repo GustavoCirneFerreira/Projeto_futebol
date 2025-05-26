@@ -341,9 +341,14 @@ class JogadorAnalyzer:
             fig = plt.gcf()
             fig.patch.set_alpha(0.0)
 
-            plt.bar(x, dados_1, width=0.4, label=nome1, align='center', color='royalblue', alpha=0.85)
-            plt.bar([i + 0.4 for i in x], dados_2, width=0.4, label=nome2, align='center', color='green', alpha=0.85)
-            
+            barras1 = plt.bar(x, dados_1, width=0.4, label=nome1, align='center', color='royalblue', alpha=0.85)
+            barras2 = plt.bar([i + 0.4 for i in x], dados_2, width=0.4, label=nome2, align='center', color='green', alpha=0.85)
+
+            for i, valor in enumerate(dados_1):
+                plt.text(i, valor + max(dados_1 + dados_2) * 0.02, f'{valor:.2f}', ha='center', fontsize=8, color='white')
+
+            for i, valor in enumerate(dados_2):
+                plt.text(i + 0.4, valor + max(dados_1 + dados_2) * 0.02, f'{valor:.2f}', ha='center', fontsize=8, color='white')
 
             plt.xticks([i + 0.2 for i in x], todas_caracteristicas, rotation=45, ha='right', fontsize=9, color='white')
             plt.yticks(color='white')
